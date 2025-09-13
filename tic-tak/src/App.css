@@ -1,0 +1,107 @@
+/* General reset */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Game container */
+.game {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+}
+
+/* Board */
+.game-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #00d9ff;
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
+}
+
+/* Rows */
+.board-row {
+  display: flex;
+}
+
+/* Squares */
+.square {
+  width: 90px;
+  height: 90px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  margin: 4px;
+  border-radius: 15px;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 217, 255, 0.15);
+}
+
+.square:hover {
+  background: rgba(0, 217, 255, 0.15);
+  transform: scale(1.05);
+  box-shadow: 0 5px 25px rgba(0, 217, 255, 0.5);
+}
+
+.square:active {
+  transform: scale(0.95);
+}
+
+/* X and O colors */
+.square:contains("X") {
+  color: #ff4d6d;
+  text-shadow: 0 0 12px rgba(255, 77, 109, 0.8);
+}
+
+.square:contains("O") {
+  color: #00ffa3;
+  text-shadow: 0 0 12px rgba(0, 255, 163, 0.8);
+}
+
+/* Game info */
+.game-info {
+  font-size: 1rem;
+}
+
+.game-info ol {
+  padding: 0;
+  list-style: none;
+}
+
+.game-info button {
+  background: transparent;
+  border: 1px solid rgba(0, 217, 255, 0.4);
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  color: #f1f1f1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.game-info button:hover {
+  background: rgba(0, 217, 255, 0.2);
+  transform: translateX(5px);
+}
