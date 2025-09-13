@@ -11,22 +11,23 @@ function Square({ value, onSquareClick }) {
 
 function Board({ xIsNext, squares, onPlay }) {
   function handleClick(i) {
+    // Disable click if square is filled or there is a winner
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
     const nextSquares = squares.slice();
-    if (xIsNext) {
-      nextSquares[i] = "X"; // Player 1
-    } else {
-      nextSquares[i] = "O"; // Player 2
-    }
+    nextSquares[i] = xIsNext ? "X" : "O";
     onPlay(nextSquares);
   }
 
   const winner = calculateWinner(squares);
+  const isDraw = !squares.includes(null) && !winner;
   let status;
+
   if (winner) {
     status = "Congratulations!! : " + (winner === "X" ? "Player 1" : "Player 2");
+  } else if (isDraw) {
+    status = "Game Over! It's a Draw!";
   } else {
     status = "Next player: " + (xIsNext ? "Player 1" : "Player 2");
   }
@@ -56,6 +57,7 @@ function Board({ xIsNext, squares, onPlay }) {
 export default function App() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
@@ -65,17 +67,17 @@ export default function App() {
     setCurrentMove(nextHistory.length - 1);
   }
 
-  function jumpTo(nextMove) {
-    setCurrentMove(nextMove);
+  function jumpTo(move) {
+    setCurrentMove(move);
+  }
+
+  function resetGame() {
+    setHistory([Array(9).fill(null)]);
+    setCurrentMove(0);
   }
 
   const moves = history.map((squares, move) => {
-    let description;
-    if (move > 0) {
-      description = "Go to move " + move;
-    } else {
-      description = "Go to game start";
-    }
+    const description = move === 0 ? "Go to game start" : "Go to move " + move;
     return (
       <li key={move}>
         <button onClick={() => jumpTo(move)}>{description}</button>
@@ -91,6 +93,7 @@ export default function App() {
       </div>
       <div className="game-info">
         <ol>{moves}</ol>
+        <button onClick={resetGame}>Reset Game</button>
       </div>
     </div>
   );
@@ -107,11 +110,11 @@ function calculateWinner(squares) {
     [0, 4, 8],
     [2, 4, 6],
   ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
+  for (let [a, b, c] of lines) {
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a];
     }
   }
   return null;
 }
+
